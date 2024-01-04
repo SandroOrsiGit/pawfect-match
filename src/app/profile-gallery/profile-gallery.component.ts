@@ -13,6 +13,7 @@ import { EMPTY, Observable } from 'rxjs';
 })
 export class ProfileGalleryComponent implements OnInit{
   pets$: Observable<Pet[]>
+  selectedPet: Pet | undefined;
   constructor(private petService: PetService){
     this.pets$ = EMPTY;
   }
@@ -27,5 +28,9 @@ export class ProfileGalleryComponent implements OnInit{
 
   get pets(): Observable<Pet[]>{
     return this.pets$;
+  }
+
+  selectPet(pet: Pet){
+    this.selectedPet = pet;
   }
 }
