@@ -1,8 +1,19 @@
 <div class="container-fluid">
     <div class="row">
+        <section class="tiny-dialog">
+            <h3>Find your pet</h3>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name"
+                  name="name"
+                  class="form-control"
+                  placeholder="Name"
+                  [(ngModel)]="searchText">
+            </div>
+          </section>
         <div id="gallery" class="col-md-9">
             <div class="gallery">
-                <div class="gallery-pet fader" *ngFor="let pet of pets$ | async" (click) = "selectPet(pet)" [class.active]="pet === selectedPet">
+                <div class="gallery-pet fader" *ngFor="let pet of pets$ | async nameFilter: searchText" (click) = "selectPet(pet)" [class.active]="pet === selectedPet">
                     <img class="profile-picture" [src]="'https://pettinder.herokuapp.com/'+ pet.image">
                     <div class="overlay">
                         <div class="overlay-text">{{pet.name}}</div>

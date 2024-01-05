@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Pet } from '../model/Pet';
 
 @Pipe({
   name: 'nameFilter',
@@ -6,8 +7,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NameFilterPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(pets: Pet[] | null, name: string) {
+    if(pets){
+      return pets.filter((pet) => pet.name.toLocaleLowerCase().includes(name))
+    }
+    return;
   }
 
 }

@@ -18,6 +18,10 @@ export class PetService {
       return this.http.get<Pet[]>(this._url).pipe(map(pets => pets.sort(this.sortByName)))
    }
 
+   addPet(pet: Pet): Observable<Pet> {
+      return this.http.post<Pet>(this._url, pet)
+   }
+
    sortByName(pet1: Pet, pet2: Pet){
      if(pet1.name < pet2.name) return -1;
      if(pet1.name > pet2.name) return 1;
