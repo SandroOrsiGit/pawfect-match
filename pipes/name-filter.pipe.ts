@@ -11,7 +11,7 @@ export class NameFilterPipe implements PipeTransform {
     if(pets){
       return pets.filter((pet) => pet.name.toLocaleLowerCase().includes(name))
     }
-    return;
+    return pets;
   }
 
 }
