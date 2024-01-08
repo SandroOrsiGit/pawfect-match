@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PetService } from '../service/pet.service';
-import { Pet } from '../../../model/Pet';
+import { Pet } from '../model/Pet';
 import { CommonModule } from '@angular/common';
 import { EMPTY, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { NameFilterPipe } from '../../../pipes/name-filter.pipe';
+import { NameFilterPipe } from '../pipes/name-filter.pipe';
 import { filter } from 'rxjs/operators';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile-gallery',
   standalone: true,
-  imports: [CommonModule, FormsModule, NameFilterPipe, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, NameFilterPipe, ReactiveFormsModule, RouterModule],
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css'
 })
@@ -19,7 +20,16 @@ export class ProfileGalleryComponent implements OnInit{
   searchText: string = "";
   pets$: Observable<Pet[]>
   selectedPet: Pet;
-  constructor(private petService: PetService){
+  createPetForm = this.formbuilder.group({
+    id: 0,
+    name: "",
+    kind: "",
+    image: "",
+    profileText: "",
+    popularity: 0
+  });
+
+  constructor(private petService: PetService, private formbuilder: UntypedFormBuilder){
   }
 
   ngOnInit(): void {
@@ -38,5 +48,11 @@ export class ProfileGalleryComponent implements OnInit{
 
   selectPet(pet: Pet){
     this.selectedPet = pet;
+  }
+
+  onSubmit() {
+    console.log(this.createPetForm)
+    this.petService.addPet(this.createPetForm.value).subscribe(_ => this.pets$ = this.getPets())
+    
   }
 }

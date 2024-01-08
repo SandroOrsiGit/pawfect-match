@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Observable, map } from 'rxjs';
-import { Pet } from '../../../model/Pet';
+import { Pet } from '../model/Pet';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,15 @@ export class PetService {
   private _url: string;
 
   constructor(private http: HttpClient) {
-    this._url = `${environment.backendUrl}/pets`
+    this._url = `${environment.backendUrl}/pets`;
    }
 
-   getPets(): Observable<any> {
+   getPets(): Observable<Pet[]> {
       return this.http.get<Pet[]>(this._url).pipe(map(pets => pets.sort(this.sortByName)))
+   }
+
+   getPetByName(name: string): Observable<Pet> {
+    return this.http.get<Pet>(`${environment.backendUrl}/pets/${name}`)
    }
 
    addPet(pet: Pet): Observable<Pet> {

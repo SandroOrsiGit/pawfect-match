@@ -6386,6 +6386,10 @@ body {
   text-align: center
 }
 
+.tiny-dialog label {
+  margin-top: 5px;
+}
+
 .big-numbers {
   counter-reset: item;
   list-style-type: none;
